@@ -17,7 +17,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.Arrays;
 
 @SpringBootApplication
-public class HelpdeskApplication implements CommandLineRunner {
+public class HelpdeskApplication/* implements CommandLineRunner*/ {
 
 	@Autowired
 	private TecnicoRepository tecnicoRepository;
@@ -29,7 +29,7 @@ public class HelpdeskApplication implements CommandLineRunner {
 		SpringApplication.run(HelpdeskApplication.class, args);
 	}
 
-	@Override
+	/*@Override
 	public void run(String... args) throws Exception {
 
 		Tecnico tec1 = new Tecnico(null, "Bruno Soares", "12345678998", "bruno@gmail.com", "123");
@@ -42,5 +42,5 @@ public class HelpdeskApplication implements CommandLineRunner {
 		tecnicoRepository.saveAll(Arrays.asList(tec1));
 		clienteRepository.saveAll(Arrays.asList(cli1));
 		chamadoRepository.saveAll(Arrays.asList(cha1));
-	}
+	}*/
 }
