@@ -13,13 +13,13 @@ public class Tecnico extends Pessoa {
     @OneToMany(mappedBy = "tecnico")
     private List<Chamado> chamados = new ArrayList<>();
 
-    public Tecnico() {
+    public Tecnico(Object o, String brunoSoares, String number, String mail, String id) {
         super();
         addPerfis(Perfil.CLIENTE);
 
     }
 
-    public Tecnico(Integer id, String nome, String cpf, String email, String senha, List<Chamado> chamados) {
+    public Tecnico(Integer id, String nome, String cpf, String email, String senha) {
         super(id, nome, cpf, email, senha);
         addPerfis(Perfil.CLIENTE);
     }
