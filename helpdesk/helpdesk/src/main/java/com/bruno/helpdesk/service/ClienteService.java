@@ -1,12 +1,12 @@
 package com.bruno.helpdesk.service;
 
 import com.bruno.helpdesk.domains.Pessoa;
-import com.bruno.helpdesk.domains.Tecnico;
-import com.bruno.helpdesk.dto.TecnicoDTO;
+import com.bruno.helpdesk.domains.Cliente;
+import com.bruno.helpdesk.dto.ClienteDTO;
 import com.bruno.helpdesk.exceptions.IntegrityViolationException;
-import com.bruno.helpdesk.repositories.PessoaRepository;
-import com.bruno.helpdesk.repositories.TecnicoRepository;
 import com.bruno.helpdesk.exceptions.ObjectnotFoundException;
+import com.bruno.helpdesk.repositories.PessoaRepository;
+import com.bruno.helpdesk.repositories.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,46 +15,46 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class TecnicoService {
+public class ClienteService {
     @Autowired
-    private TecnicoRepository tecnicoRepository;
+    private ClienteRepository ClienteRepository;
 
     @Autowired
     private PessoaRepository pessoaRepository;
 
-    public Tecnico findById(Integer id) {
-        Optional<Tecnico> obj = tecnicoRepository.findById(id);
+    public Cliente findById(Integer id) {
+        Optional<Cliente> obj = ClienteRepository.findById(id);
         return obj.orElseThrow(() -> new ObjectnotFoundException("Objeto não encontrado! Id: " + id));
     }
 
-    public List<Tecnico> findAll() {
-        return tecnicoRepository.findAll();
+    public List<Cliente> findAll() {
+        return ClienteRepository.findAll();
     }
 
-    public Tecnico create(TecnicoDTO objDTO) {
+    public Cliente create(ClienteDTO objDTO) {
         objDTO.setId(null);
         validaPorCpfEEmail(objDTO);
-        Tecnico newObj = new Tecnico(objDTO);
-        return tecnicoRepository.save(newObj);
+        Cliente newObj = new Cliente(objDTO);
+        return ClienteRepository.save(newObj);
     }
 
-    public Tecnico update(Integer id, @Valid TecnicoDTO objTecnicoDTO) {
-        objTecnicoDTO.setId(id);
-        Tecnico oldobj = findById(id);
-        validaPorCpfEEmail(objTecnicoDTO);
-        oldobj = new Tecnico(objTecnicoDTO);
-        return tecnicoRepository.save(oldobj);
+    public Cliente update(Integer id, @Valid ClienteDTO objClienteDTO) {
+        objClienteDTO.setId(id);
+        Cliente oldobj = findById(id);
+        validaPorCpfEEmail(objClienteDTO);
+        oldobj = new Cliente(objClienteDTO);
+        return ClienteRepository.save(oldobj);
     }
 
     public void delete(Integer id) {
-        Tecnico objTecnico = findById(id);
-        if(objTecnico.getChamados().size() > 0){
-            throw new IntegrityViolationException("Técnico Possui Odens De Serviço e Não Pode Eer Deletado");
+        Cliente objCliente = findById(id);
+        if(objCliente.getChamados().size() > 0){
+            throw new IntegrityViolationException("Cliente Possui Odens De Serviço e Não Pode Eer Deletado");
         }
-        tecnicoRepository.deleteById(id);
+        ClienteRepository.deleteById(id);
     }
 
-    private void validaPorCpfEEmail(TecnicoDTO objDTO) {
+    private void validaPorCpfEEmail(ClienteDTO objDTO) {
 
         Optional<Pessoa> obj = pessoaRepository.findByCpf(objDTO.getCpf());
         if (obj.isPresent() && obj.get().getId() != objDTO.getId()) {

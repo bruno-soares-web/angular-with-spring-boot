@@ -1,3 +1,4 @@
+
 package com.bruno.helpdesk.resources;
 
 import com.bruno.helpdesk.domains.Tecnico;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/tecnicos")
+@RequestMapping(value = "/tecnico")
 public class TecnicoResources {
 
     @Autowired
@@ -37,5 +38,18 @@ public class TecnicoResources {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(newObj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
+
+    @PutMapping(value =  "/{id}")
+    public ResponseEntity<TecnicoDTO> update(@PathVariable Integer id, @Valid @RequestBody TecnicoDTO objTecnicoDTO){
+        Tecnico objTecnico =  tecnicoService.update(id, objTecnicoDTO);
+        return ResponseEntity.ok().body(new TecnicoDTO(objTecnico));
+    }
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<TecnicoDTO> delete(@PathVariable Integer id){
+        tecnicoService.delete(id);
+        return ResponseEntity.noContent().build();
+
+    }
+
 }
 
