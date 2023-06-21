@@ -33,7 +33,7 @@ public class DBService {
         @Bean
         public void instaciaDB() {
 
-            /*Tecnico tec1 = new Tecnico(null, "Valdir Cezar", "550.482.150-95", "valdir@mail.com", "123");
+            Tecnico tec1 = new Tecnico(null, "Valdir Cezar", "550.482.150-95", "valdir@mail.com", "123");
             tec1.addPerfis(Perfil.ADMIN);
 
             Tecnico tec2 = new Tecnico(null, "Richard Stallman", "903.347.070-56", "stallman@mail.com", "123");
@@ -55,6 +55,6 @@ public class DBService {
             Chamado c6 = new Chamado(null, Prioridade.BAIXA, Status.ENCERRADO, "Chamado 7", "Teste chamado 6", tec1, cli5);
 
             pessoaRepository .saveAll(Arrays.asList(tec1, tec2, tec3, tec4, tec5, cli1, cli2, cli3, cli4, cli5));
-            chamadoRepository.saveAll(Arrays.asList(c1, c2, c3, c4, c5, c6));*/
+            chamadoRepository.saveAll(Arrays.asList(c1, c2, c3, c4, c5, c6));
         }
 }
