@@ -1,7 +1,11 @@
 package com.bruno.helpdesk.exceptions;
 
+import com.bruno.helpdesk.dto.TecnicoDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -14,19 +18,33 @@ public class ResourcesExceptionsHandler {
                                                                  HttpServletRequest request) {
 
         StandardError error = new StandardError(System.currentTimeMillis(), HttpStatus.NOT_FOUND.value(),
-                "Object Not Found", ex.getMessage(), request.getRequestURI());
+                "Registro Não Encontrado", ex.getMessage(), request.getRequestURI());
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<StandardError> dataIntegrityViolationException(DataIntegrityViolationException ex,
+    @ExceptionHandler(IntegrityViolationException.class)
+    public ResponseEntity<StandardError> validationErros(IntegrityViolationException ex,
                                                                          HttpServletRequest request) {
 
         StandardError error = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(),
-                "Violação de dados, CPF já Cadastrado No Sistema", ex.getMessage(), request.getRequestURI());
+                "Violação de dados, já Cadastrado No Sistema", ex.getMessage(), request.getRequestURI());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<StandardError> dataIntegrityViolationException(MethodArgumentNotValidException ex,
+                                                                         HttpServletRequest request) {
+
+        ValidationError errors = new ValidationError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(),
+                "Validation error", "Erro na validação dos campos", request.getRequestURI());
+
+        for(FieldError x : ex.getBindingResult().getFieldErrors()) {
+            errors.addError(x.getField(), x.getDefaultMessage());
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
 
 

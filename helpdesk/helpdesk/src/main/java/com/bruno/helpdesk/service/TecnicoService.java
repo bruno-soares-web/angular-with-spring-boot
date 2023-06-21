@@ -3,6 +3,7 @@ package com.bruno.helpdesk.service;
 import com.bruno.helpdesk.domains.Pessoa;
 import com.bruno.helpdesk.domains.Tecnico;
 import com.bruno.helpdesk.dto.TecnicoDTO;
+import com.bruno.helpdesk.exceptions.IntegrityViolationException;
 import com.bruno.helpdesk.repositories.PessoaRepository;
 import com.bruno.helpdesk.repositories.TecnicoRepository;
 import com.bruno.helpdesk.exceptions.ObjectnotFoundException;
@@ -41,13 +42,13 @@ public class TecnicoService {
 
         Optional<Pessoa> obj = pessoaRepository.findByCpf(objDTO.getCpf());
         if(obj.isPresent() && obj.get().getId() != objDTO.getId()){
-            throw new DataIntegrityViolationException("CPF " + objDTO.getCpf() + " Já Cadastrado No Sistema");
+            throw new IntegrityViolationException("CPF " + objDTO.getCpf() + " Já Cadastrado No Sistema");
 
         }
 
         obj = pessoaRepository.findByEmail(objDTO.getEmail());
         if (obj.isPresent() && obj.get().getId() != objDTO.getId()) {
-            throw new DataIntegrityViolationException("E-mail " + objDTO.getEmail() + "Já Cadastrado No Sistema!");
+            throw new IntegrityViolationException("E-mail " + objDTO.getEmail() + " Já Cadastrado No Sistema!");
         }
     }
 }

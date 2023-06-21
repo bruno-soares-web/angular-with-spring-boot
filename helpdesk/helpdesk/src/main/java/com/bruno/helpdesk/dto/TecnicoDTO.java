@@ -5,6 +5,7 @@ import com.bruno.helpdesk.domains.enuns.Perfil;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -16,9 +17,13 @@ public class TecnicoDTO implements Serializable {
 
 
     protected Integer id;
+    @NotNull(message = "Campo NOME Deve Ser De Preenchimento Obrigatótio")
     protected String nome;
+    @NotNull(message = "Campo CPF Deve Ser De Preenchimento Obrigatótio")
     protected String cpf;
+    @NotNull(message = "Campo EMAIL Deve Ser De Preenchimento Obrigatótio")
     protected String email;
+    @NotNull(message = "Campo SENHA Deve Ser De Preenchimento Obrigatótio")
     protected String senha;
     protected Set<Integer> perfis = new HashSet<>();
     @JsonFormat(pattern = "dd/MM/yyyy")
